@@ -8,12 +8,12 @@
       app
     >
       <v-list dense>
-        <v-list-tile v-for="(item, index) in items" v-bind:key="index" :to="{path: item.route}">
+        <v-list-tile v-for="(item, index) in items" v-bind:key="index" :to="{path: item.path}">
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{item.text}}</v-list-tile-title>
+            <v-list-tile-title>{{item.name}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -21,6 +21,10 @@
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>REVIEW VueJS</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items v-for="item in category" v-bind:key="item.key">
+        <v-btn flat @click="changeCategory(item.key)">{{item.name}}</v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
@@ -39,20 +43,29 @@
 <script>
 export default {
   name: 'App',
+  created() {
+    this.changeCategory('vuejs')
+  },
+  mounted() {
+    this.items = this.$store.getters.getMenu
+  },
   data: () => ({
     dialog: false,
     drawer: null,
-    items: [
-      { text: 'Life Cycle', route: '/lifecycle' }, 
-      { text: 'Template Grammer', route: '/templategrammer' }, 
-      { text: 'Computed & Watch', route: '/computedandwatch' }, 
-      { text: 'Component', route: '/component' }, 
-      { text: 'Slot', route: '/slot'  }, 
-      { text: 'Vuex', route: '/'  }, 
+    items: [],
+    category: [
+      { key: 'vuejs', name: 'Review VueJS'},
+      { key: 'components', name: 'Components'},
     ]
   }),
   props: {
     source: String
+  },
+  methods: {
+    changeCategory(key) {
+      this.$store.dispatch('changeCategory', key)
+      this.items = this.$store.getters.getMenu
+    }
   }
 }
 </script>
