@@ -1,7 +1,8 @@
 <template>
     <div>
+        <m-table :data="data"></m-table>
         Checked Values : {{multiSelect}}
-        <table ref="multipleTable">
+        <!--<table ref="multipleTable">
             <tr>
                 <td><input type="checkbox" id="checkbox" @change="parentChecked"></td>
                 <td>id</td>
@@ -16,11 +17,13 @@
                 <td>{{element.title}}</td>
                 <td>{{element.body}}</td>
             </tr>
-        </table>
+        </table>-->
     </div>
 </template>
 <script>
+import mTable from '../components/Table'
 export default {
+    components: { mTable },
     data() {
         return {
             data: [],
@@ -31,6 +34,7 @@ export default {
         this.$http.get('https://jsonplaceholder.typicode.com/posts').then(response => {
             this.data = response.data
         })
+        
     },
     methods: {
         parentChecked() {

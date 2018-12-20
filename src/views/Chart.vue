@@ -8,16 +8,6 @@
             <text y="15">{{value}}</text>
         </g>
         </svg>
-
-        <svg xmlns="http://www.w3.org/2000/svg" :width="width" :height="height">
-        <g 
-        v-for="(value, i) in data" v-bind:key="i" 
-        :transform="`translate(${i * 40}, 0)`">
-            <rect :width="30" :height="barWidth(value)" fill="#f33687"></rect>
-            <text y="15">{{value}}</text>
-        </g>
-        </svg>
-
         <button @click="changeData">change Data</button>
          {{data}}
     </div>
